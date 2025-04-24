@@ -11,20 +11,6 @@ A modern Android application for car rental services built with Jetpack Compose.
 - 🖼️ High-quality car images and assets
 - 🎯 User-friendly onboarding experience
 
-## Screenshots
-
-### Welcome Screen
-![Welcome Screen](screenshots/welcome-screen.png)
-*Elegant welcome screen featuring an Audi against a sunset backdrop, with the message "Your Journey Starts Here" and "Book a Car Now!"*
-
-### Car Selection Screen
-![Second Screen](screenshots/second-screen.png)
-*Showcase of the Audi RS e-tron GT with detailed description and "Let's Get Started" button*
-
-### Favorites Screen
-![Third Screen](screenshots/third-screen.png)
-*Save your favorite cars for later with easy comparison and booking options*
-
 ## Tech Stack
 
 - Kotlin
