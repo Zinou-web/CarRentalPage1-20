@@ -13,7 +13,17 @@ A modern Android application for car rental services built with Jetpack Compose.
 
 ## Screenshots
 
-[Add screenshots of your app here]
+### Welcome Screen
+![Welcome Screen](screenshots/welcome-screen.png)
+*Welcome screen with car rental introduction*
+
+### Second Screen
+![Second Screen](screenshots/second-screen.png)
+*Second screen showing car details and booking options*
+
+### Third Screen
+![Third Screen](screenshots/third-screen.png)
+*Third screen with booking confirmation and payment options*
 
 ## Tech Stack
 
