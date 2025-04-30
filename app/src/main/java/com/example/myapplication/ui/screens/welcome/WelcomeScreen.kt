@@ -24,14 +24,16 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.theme.*
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    onNextClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(White)
     ) {
         BackgroundImage()
-        MainContent()
+        MainContent(onNextClick)
     }
 }
 
@@ -46,7 +48,7 @@ fun BackgroundImage() {
 }
 
 @Composable
-fun MainContent() {
+fun MainContent(onNextClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -63,7 +65,7 @@ fun MainContent() {
             WelcomeDescription()
         }
         
-        GetStartedButton()
+        GetStartedButton(onNextClick)
     }
 }
 
@@ -120,9 +122,9 @@ fun WelcomeDescription() {
 }
 
 @Composable
-fun GetStartedButton() {
+fun GetStartedButton(onClick: () -> Unit) {
     Button(
-        onClick = { },
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(containerColor = PrimaryGreen),
         shape = RoundedCornerShape(20.dp),
         modifier = Modifier

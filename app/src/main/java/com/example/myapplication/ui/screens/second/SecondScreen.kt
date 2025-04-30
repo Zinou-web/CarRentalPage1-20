@@ -25,13 +25,16 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.theme.*
 
 @Composable
-fun SecondScreen() {
+fun SecondScreen(
+    onBackClick: () -> Unit = {},
+    onNextClick: () -> Unit = {},
+    onSkipClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundWhite)
     ) {
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -40,17 +43,14 @@ fun SecondScreen() {
                 painter = painterResource(id = R.drawable.audi),
                 contentDescription = "Audi ",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-
+                modifier = Modifier.fillMaxWidth()
             )
             
             TextButton(
-                onClick = { },
+                onClick = onSkipClick,
                 modifier = Modifier
                     .align(Alignment.TopEnd)
-                    .padding( 19.dp)
+                    .padding(19.dp)
             ) {
                 Text(
                     "Skip",
@@ -70,7 +70,7 @@ fun SecondScreen() {
         ) {
             WelcomeTexts()
             Spacer(modifier = Modifier.height(40.dp))
-            BottomSection()
+            BottomSection(onNextClick)
         }
     }
 }
@@ -111,9 +111,10 @@ fun WelcomeTexts() {
 }
 
 @Composable
-fun BottomSection() {
+fun BottomSection(onNextClick: () -> Unit) {
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 28.dp)
     ) {
         PageIndicator(
@@ -121,6 +122,7 @@ fun BottomSection() {
         )
         
         NextButton(
+            onClick = onNextClick,
             modifier = Modifier.align(Alignment.CenterEnd)
         )
     }
@@ -149,9 +151,12 @@ fun PageIndicator(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NextButton(modifier: Modifier = Modifier) {
+fun NextButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     IconButton(
-        onClick = { },
+        onClick = onClick,
         modifier = modifier
             .size(58.dp)
             .background(color = Page2Green, shape = RoundedCornerShape(25.dp))

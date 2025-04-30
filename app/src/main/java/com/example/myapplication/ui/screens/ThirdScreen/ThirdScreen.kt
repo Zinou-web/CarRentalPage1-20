@@ -25,13 +25,15 @@ import com.example.myapplication.R
 import com.example.myapplication.ui.theme.*
 
 @Composable
-fun ThirdScreen() {
+fun ThirdScreen(
+    onBackClick: () -> Unit = {},
+    onNextClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundWhite)
     ) {
-
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -40,12 +42,8 @@ fun ThirdScreen() {
                 painter = painterResource(id = R.drawable.audi2),
                 contentDescription = "Audi N2",
                 contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .fillMaxWidth()
-
-
+                modifier = Modifier.fillMaxWidth()
             )
-
         }
 
         Column(
@@ -57,7 +55,7 @@ fun ThirdScreen() {
         ) {
             WelcomeTexts()
             Spacer(modifier = Modifier.height(40.dp))
-            BottomSection()
+            BottomSection(onBackClick, onNextClick)
         }
     }
 }
@@ -86,7 +84,7 @@ fun WelcomeTexts() {
     Spacer(modifier = Modifier.height(30.dp))
 
     Text(
-        text = "Found a car you love? Add it to your\n favorites to keep it handy for later.\n Compare your top picks, revisit them\n anytime, and book with confidence when\n you’re ready to hit the road!",
+        text = "Found a car you love? Add it to your\n favorites to keep it handy for later.\n Compare your top picks, revisit them\n anytime, and book with confidence when\n you're ready to hit the road!",
         fontSize = 18.sp,
         lineHeight = 22.sp,
         color = TextGray,
@@ -98,9 +96,13 @@ fun WelcomeTexts() {
 }
 
 @Composable
-fun BottomSection() {
+fun BottomSection(
+    onBackClick: () -> Unit,
+    onNextClick: () -> Unit
+) {
     Box(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
             .padding(horizontal = 28.dp)
     ) {
         PageIndicator(
@@ -108,10 +110,12 @@ fun BottomSection() {
         )
 
         NextButton(
+            onClick = onNextClick,
             modifier = Modifier.align(Alignment.CenterEnd)
         )
 
         BackButton(
+            onClick = onBackClick,
             modifier = Modifier.align(Alignment.CenterStart)
         )
     }
@@ -140,9 +144,12 @@ fun PageIndicator(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun NextButton(modifier: Modifier = Modifier) {
+fun NextButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     IconButton(
-        onClick = { },
+        onClick = onClick,
         modifier = modifier
             .size(58.dp)
             .background(color = Page2Green, shape = RoundedCornerShape(25.dp))
@@ -155,17 +162,21 @@ fun NextButton(modifier: Modifier = Modifier) {
         )
     }
 }
+
 @Composable
-fun BackButton(modifier: Modifier = Modifier) {
+fun BackButton(
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     IconButton(
-        onClick = { },
+        onClick = onClick,
         modifier = modifier
             .size(58.dp)
             .background(color = Page2Green, shape = RoundedCornerShape(25.dp))
     ) {
         Icon(
             imageVector = Icons.Default.ArrowBack,
-            contentDescription = "Next",
+            contentDescription = "Back",
             tint = Color.White,
             modifier = Modifier.size(35.dp)
         )
@@ -174,7 +185,7 @@ fun BackButton(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun SecondScreenPreview() {
+fun ThirdScreenPreview() {
     MyApplicationTheme {
         ThirdScreen()
     }
