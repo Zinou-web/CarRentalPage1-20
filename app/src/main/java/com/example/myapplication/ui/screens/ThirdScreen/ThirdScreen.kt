@@ -49,7 +49,7 @@ fun ThirdScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 87.dp)
+                .padding(bottom = 70.dp)
                 .padding(horizontal = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

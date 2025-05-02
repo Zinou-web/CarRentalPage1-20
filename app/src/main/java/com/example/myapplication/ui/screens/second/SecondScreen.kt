@@ -44,6 +44,7 @@ fun SecondScreen(
                 contentDescription = "Audi ",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth()
+
             )
             
             TextButton(
@@ -64,7 +65,7 @@ fun SecondScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 87.dp)
+                .padding(bottom = 70.dp)
                 .padding(horizontal = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

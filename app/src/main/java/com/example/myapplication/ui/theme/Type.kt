@@ -9,3 +9,8 @@ val poppins = FontFamily(
     Font(R.font.poppins_regular, FontWeight.Normal),
     Font(R.font.poppins_semibold, FontWeight.SemiBold)
 ) 
+
+val inter = FontFamily(
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_semibold, FontWeight.SemiBold)
+) 
