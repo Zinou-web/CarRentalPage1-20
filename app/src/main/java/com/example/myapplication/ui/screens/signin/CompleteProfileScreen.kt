@@ -29,7 +29,8 @@ import com.example.myapplication.ui.theme.poppins
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CompleteProfileScreen(
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    onProfileComplete: () -> Unit = {}
 ) {
     var fullName by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
@@ -45,7 +46,7 @@ fun CompleteProfileScreen(
         // Back Button
         Box(
             modifier = Modifier
-                .padding(start = 15.dp, top = 40.dp)
+                .padding(start = 15.dp, top = 20.dp)
                 .size(50.dp)
                 .clip(CircleShape)
                 .background(Color.White)
@@ -67,7 +68,7 @@ fun CompleteProfileScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(horizontal = 24.dp, vertical = 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
@@ -354,7 +355,7 @@ fun CompleteProfileScreen(
             Spacer(modifier = Modifier.height(40.dp))
 
             Button(
-                onClick = { /* Handle profile completion */ },
+                onClick = onProfileComplete,
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF149459)),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier

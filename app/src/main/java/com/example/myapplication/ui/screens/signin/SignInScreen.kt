@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
@@ -45,7 +46,8 @@ import androidx.compose.ui.text.font.Font
 @Composable
 fun SignInScreen(
     onCreateAccountClick: () -> Unit = {},
-    onForgotPasswordClick: () -> Unit = {}
+    onForgotPasswordClick: () -> Unit = {},
+    onSignInSuccess: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -184,7 +186,7 @@ fun SignInScreen(
             }
             Spacer(modifier = Modifier.height(24.dp))
             Button(
-                onClick = { },
+                onClick = { onSignInSuccess() },
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF149459)),
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier

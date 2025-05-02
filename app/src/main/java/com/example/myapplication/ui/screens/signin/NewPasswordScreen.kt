@@ -50,7 +50,7 @@ fun NewPasswordScreen(
         // Back Button
         Box(
             modifier = Modifier
-                .padding(start = 15.dp, top = 40.dp)
+                .padding(start = 15.dp, top = 20.dp)
                 .size(50.dp)
                 .clip(CircleShape)
                 .background(Color.White)
@@ -72,7 +72,7 @@ fun NewPasswordScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(24.dp),
+                .padding(horizontal = 24.dp, vertical = 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(

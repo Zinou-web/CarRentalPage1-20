@@ -1,9 +1,13 @@
 package com.example.myapplication.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.myapplication.ui.screens.cardetails.CarDetailsScreen
+import com.example.myapplication.ui.screens.cardetails.GalleryScreen
+import com.example.myapplication.ui.screens.home.HomeScreen
 import com.example.myapplication.ui.screens.signin.CompleteProfileScreen
 import com.example.myapplication.ui.screens.signin.CreateAccountScreen
 import com.example.myapplication.ui.screens.signin.NewPasswordScreen
@@ -23,7 +27,10 @@ enum class Screen {
     SignIn,       // The sign in screen
     CreateAccount, // The create account screen
     NewPassword,  // The new password screen
-    CompleteProfile  // The profile completion screen
+    CompleteProfile,  // The profile completion screen
+    Home,         // The home screen with car listings
+    CarDetails,   // The car details screen
+    Gallery       // The gallery screen showing car photos
 }
 
 /**
@@ -65,7 +72,12 @@ fun NavGraph(
                 },
                 // Skip to sign in screen
                 onSkipClick = {
-                    navController.navigate(Screen.SignIn.name)
+                    navController.navigate(Screen.SignIn.name) {
+                        // Clear the back stack so user can't go back to onboarding
+                        popUpTo(Screen.Welcome.name) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -79,7 +91,12 @@ fun NavGraph(
                 },
                 // Navigate to sign in screen
                 onNextClick = {
-                    navController.navigate(Screen.SignIn.name)
+                    navController.navigate(Screen.SignIn.name) {
+                        // Clear the back stack so user can't go back to onboarding
+                        popUpTo(Screen.Welcome.name) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -94,6 +111,10 @@ fun NavGraph(
                 // Navigate to forgot password flow
                 onForgotPasswordClick = {
                     navController.navigate(Screen.NewPassword.name)
+                },
+                // Navigate to Home on successful login
+                onSignInSuccess = {
+                    navController.navigateAndClear(Screen.Home.name)
                 }
             )
         }
@@ -103,7 +124,11 @@ fun NavGraph(
             CreateAccountScreen(
                 // Navigate to sign in screen
                 onSignInClick = {
-                    navController.navigate(Screen.SignIn.name)
+                    navController.navigate(Screen.SignIn.name) {
+                        popUpTo(Screen.SignIn.name) {
+                            inclusive = true
+                        }
+                    }
                 },
                 // Navigate to complete profile after successful account creation
                 onCreateAccountSuccess = {
@@ -119,9 +144,14 @@ fun NavGraph(
                 onBackClick = {
                     navController.popBackStack()
                 },
-                // Navigate to complete profile after password reset
+                // Navigate to password reset
                 onPasswordResetSuccess = {
-                    navController.navigate(Screen.CompleteProfile.name)
+                    // Return to sign in after setting new password
+                    navController.navigate(Screen.SignIn.name) {
+                        popUpTo(Screen.SignIn.name) {
+                            inclusive = true
+                        }
+                    }
                 }
             )
         }
@@ -132,7 +162,72 @@ fun NavGraph(
                 // Navigate back to previous screen
                 onBackClick = {
                     navController.popBackStack()
+                },
+                // After profile completion, go to Sign In screen
+                onProfileComplete = {
+                    navController.navigate(Screen.SignIn.name) {
+                        popUpTo(Screen.CreateAccount.name) {
+                            inclusive = true
+                        }
+                    }
                 }
+            )
+        }
+        
+        // Home Screen
+        composable(Screen.Home.name) {
+            HomeScreen(
+                // Navigate to car details when a car is clicked
+                onCarClick = { carId ->
+                    // Pass the car ID to the CarDetails screen
+                    navController.navigate(Screen.CarDetails.name)
+                },
+                // Navigate to profile screen
+                onProfileClick = {
+                    // Could add a Profile screen later
+                    // For now, just go to Sign In as a placeholder
+                    navController.navigate(Screen.SignIn.name)
+                },
+                // Navigate to welcome screen (sign out)
+                onSignOut = {
+                    navController.navigateAndClear(Screen.Welcome.name)
+                }
+            )
+        }
+        
+        // Car Details Screen
+        composable(Screen.CarDetails.name) {
+            CarDetailsScreen(
+                // Navigate back to home
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+                // Navigate to Gallery screen
+                onGalleryClick = {
+                    navController.navigate(Screen.Gallery.name)
+                }
+            )
+        }
+        
+        // Gallery Screen
+        composable(Screen.Gallery.name) {
+            GalleryScreen(
+                // Navigate back to car details
+                onBackPressed = {
+                    navController.popBackStack()
+                },
+                // Example photos - in a real app, you would pass these from the previous screen
+                photos = listOf(
+                    com.example.myapplication.R.drawable.mustang,
+                    com.example.myapplication.R.drawable.mustang2,
+                    com.example.myapplication.R.drawable.mustang3,
+                    com.example.myapplication.R.drawable.mustang,
+                    com.example.myapplication.R.drawable.mustang2,
+                    com.example.myapplication.R.drawable.mustang3,
+                    com.example.myapplication.R.drawable.mustang,
+                    com.example.myapplication.R.drawable.mustang2,
+                    com.example.myapplication.R.drawable.mustang3
+                )
             )
         }
     }

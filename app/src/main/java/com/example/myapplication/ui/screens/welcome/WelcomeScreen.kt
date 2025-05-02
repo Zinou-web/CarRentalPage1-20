@@ -53,7 +53,7 @@ fun MainContent(onNextClick: () -> Unit) {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 24.dp)
-            .padding(top = 80.dp, bottom = 48.dp),
+            .padding(top = 60.dp, bottom = 20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

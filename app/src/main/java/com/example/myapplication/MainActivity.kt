@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
 import com.example.myapplication.navigation.NavGraph
+import com.example.myapplication.navigation.Screen
 import com.example.myapplication.ui.theme.MyApplicationTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,9 +25,12 @@ class MainActivity : ComponentActivity() {
                     // Create a NavController that will be used for navigation
                     val navController = rememberNavController()
                     
-                    // Set up the navigation graph
+                    // Set up the navigation graph starting from the Welcome screen
                     // This will handle all navigation between screens
-                    NavGraph(navController = navController)
+                    NavGraph(
+                        navController = navController,
+                        startDestination = Screen.Welcome
+                    )
                 }
             }
         }

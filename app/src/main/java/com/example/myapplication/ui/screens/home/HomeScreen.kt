@@ -34,7 +34,11 @@ import com.example.myapplication.ui.theme.inter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    onCarClick: (String) -> Unit = {},
+    onProfileClick: () -> Unit = {},
+    onSignOut: () -> Unit = {}
+) {
     val scrollState = rememberScrollState()
     var searchQuery by remember { mutableStateOf("") }
 
@@ -57,14 +61,14 @@ fun HomeScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Profile Icon
+                // Profile Icon - now clickable to navigate to profile
                 Box(
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(12.dp))
                         .size(40.dp)
                         .background(Color.White)
                         .padding(8.dp)
-
+                        .clickable { onProfileClick() }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.profile),
@@ -231,7 +235,6 @@ fun HomeScreen() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
 
             // Top Rated Cars
             Text(
@@ -252,21 +255,22 @@ fun HomeScreen() {
             ) {
                 items(3) { index ->
                     val images = listOf(
-                        R.drawable.dodge,
-                        R.drawable.dodge,
-                        R.drawable.dodge
+                        R.drawable.mustang2,
+                        R.drawable.mustang3,
+                        R.drawable.mustang2
                     )
                     
                     TopRatedCarCard(
                         carName = "Toyota RAV4 2024",
                         price = "00.00DA/day", 
                         rating = 4.9f,
-                        imageRes = images[index]
+                        imageRes = images[index],
+                        onClick = { onCarClick("Toyota RAV4 2024") }
                     )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(20.dp))
 
             // Most Popular Car
             Text(
@@ -282,10 +286,10 @@ fun HomeScreen() {
 
             // Multiple Most Popular Cars
             val popularCars = listOf(
-                Triple("Toyota RAV4 2024", "00.00DA/day", R.drawable.dodge),
-                Triple("Audi RS e-tron GT", "00.00DA/day", R.drawable.audipopular),
-                Triple("Mercedes AMG GT", "00.00DA/day", R.drawable.dodge),
-                Triple("BMW i7 2024", "00.00DA/day", R.drawable.audipopular)
+                Triple("Toyota RAV4 2024", "00.00DA/day", R.drawable.mustang),
+                Triple("Audi RS e-tron GT", "00.00DA/day", R.drawable.mustang),
+                Triple("Mercedes AMG GT", "00.00DA/day", R.drawable.mustang),
+                Triple("BMW i7 2024", "00.00DA/day", R.drawable.mustang)
             )
             
             popularCars.forEach { (carName, price, imageRes) ->
@@ -293,16 +297,18 @@ fun HomeScreen() {
                     carName = carName,
                     price = price,
                     rating = 4.9f,
-                    imageRes = imageRes
+                    imageRes = imageRes,
+                    onClick = { onCarClick(carName) }
                 )
                 
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }
 
-        // Bottom Navigation
+        // Bottom Navigation Bar
         BottomNavBar(
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onProfileClick = onProfileClick
         )
     }
 }
@@ -354,12 +360,14 @@ fun TopRatedCarCard(
     carName: String,
     price: String,
     rating: Float,
-    imageRes: Int
+    imageRes: Int,
+    onClick: () -> Unit = {}
 ) {
     Card(
         modifier = Modifier
             .width(160.dp)
-            .height(140.dp),
+            .height(140.dp)
+            .clickable(onClick = onClick),
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = Color.Transparent),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
@@ -382,11 +390,11 @@ fun TopRatedCarCard(
                     .align(Alignment.TopStart)
             ) {
                 Card(
-                    shape = RoundedCornerShape(50.dp),
+                    shape = RoundedCornerShape(10.dp),
                     colors = CardDefaults.cardColors(containerColor = Color.White)
                 ) {
                     Row(
-                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 2.dp),
+                        modifier = Modifier.padding(horizontal = 6.dp, vertical = 0.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Icon(
@@ -400,7 +408,7 @@ fun TopRatedCarCard(
                         
                         Text(
                             text = rating.toString(),
-                            fontSize = 10.sp,
+                            fontSize = 11.sp,
                             fontWeight = FontWeight.Medium,
                             color = Color.Black
                         )
@@ -455,7 +463,8 @@ fun MostPopularCarCard(
     carName: String,
     price: String,
     rating: Float,
-    imageRes: Int
+    imageRes: Int,
+    onClick: () -> Unit = {}
 ) {
     // State to track if this car is favorited
     var isFavorite by remember { mutableStateOf(false) }
@@ -464,6 +473,7 @@ fun MostPopularCarCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
+            .clickable(onClick = onClick)
     ) {
         // Outer white card containing everything
         Card(
@@ -509,7 +519,7 @@ fun MostPopularCarCard(
                                 elevation = CardDefaults.cardElevation(defaultElevation = 0.dp)
                             ) {
                                 Row(
-                                    modifier = Modifier.padding(horizontal = 4.dp, vertical = 4.dp),
+                                    modifier = Modifier.padding(horizontal = 3.dp, vertical = 0.dp),
                                     verticalAlignment = Alignment.CenterVertically
                                 ) {
                                     Icon(
@@ -523,7 +533,7 @@ fun MostPopularCarCard(
                                     
                                     Text(
                                         text = "4.9",
-                                        fontSize = 14.sp,
+                                        fontSize = 15.sp,
                                         fontWeight = FontWeight.Bold,
                                         color = Color.Black
                                     )
@@ -600,13 +610,13 @@ fun MostPopularCarCard(
                         iconRes = R.drawable.manual,
                         text = "Manual"
                     )
-                    Spacer(modifier = Modifier.width(45.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                     // Petrol
                     FeatureItem(
                         iconRes = R.drawable.petrol,
                         text = "Petrol"
                     )
-                    Spacer(modifier = Modifier.width(45.dp))
+                    Spacer(modifier = Modifier.width(40.dp))
                     // Seat
                     FeatureItem(
                         iconRes = R.drawable.seat,
@@ -680,7 +690,13 @@ fun CarFeatureTag(
 }
 
 @Composable
-fun BottomNavBar(modifier: Modifier = Modifier) {
+fun BottomNavBar(
+    modifier: Modifier = Modifier,
+    onHomeClick: () -> Unit = {},
+    onCatalogClick: () -> Unit = {},
+    onFavoriteClick: () -> Unit = {},
+    onProfileClick: () -> Unit = {}
+) {
     Card(
         modifier = modifier
             .fillMaxWidth()
@@ -699,22 +715,26 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
             BottomNavItem(
                 iconRes = R.drawable.home,
                 label = "Home",
-                isSelected = true
+                isSelected = true,
+                onClick = onHomeClick
             )
             
             BottomNavItem(
                 iconRes = R.drawable.catalog,
-                label = "Catalog"
+                label = "Catalog",
+                onClick = onCatalogClick
             )
             
             BottomNavItem(
-                iconRes = R.drawable.heart,
-                label = "Favorite"
+                iconRes = R.drawable.heart, // Using heart for Favorite
+                label = "Favorite",
+                onClick = onFavoriteClick
             )
             
             BottomNavItem(
                 iconRes = R.drawable.profilenav,
-                label = "Profile"
+                label = "Profile",
+                onClick = onProfileClick
             )
         }
     }
@@ -724,7 +744,8 @@ fun BottomNavBar(modifier: Modifier = Modifier) {
 fun BottomNavItem(
     iconRes: Int,
     label: String,
-    isSelected: Boolean = false
+    isSelected: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
     val itemColor = if (isSelected) Color.Black else Color.Gray
     val bgColor = if (isSelected) Color(0xFFEADDFA) else Color.Transparent
@@ -734,6 +755,7 @@ fun BottomNavItem(
         verticalArrangement = Arrangement.Center,
         modifier = Modifier
             .padding(horizontal = 12.dp)
+            .clickable(onClick = onClick)
     ) {
         Box(
             modifier = Modifier
