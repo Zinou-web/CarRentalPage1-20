@@ -42,7 +42,8 @@ fun GalleryScreen(
         R.drawable.audi,
         R.drawable.mustang,
         R.drawable.audi2
-    )
+    ),
+    onBookNow: () -> Unit = {}
 ) {
     var isFavorite by remember { mutableStateOf(false) }
     
@@ -95,7 +96,7 @@ fun GalleryScreen(
                 .padding(top = 735.dp)
                 .fillMaxWidth()
         ) {
-            GalleryPriceAndBookSection()
+            GalleryPriceAndBookSection(onBookNow = onBookNow)
         }
     }
 }
@@ -426,7 +427,7 @@ fun GalleryContent(
 }
 
 @Composable
-fun GalleryPriceAndBookSection() {
+fun GalleryPriceAndBookSection(onBookNow: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -469,7 +470,7 @@ fun GalleryPriceAndBookSection() {
             
             // Book Now Button
             Button(
-                onClick = { },
+                onClick = { onBookNow() },
                 modifier = Modifier
                     .height(40.dp)
                     .width(150.dp),

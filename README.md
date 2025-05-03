@@ -1,72 +1,67 @@
-# Car Rental Android App
+# Car Rental App
 
-A modern Android application for car rental services built with Jetpack Compose.
+A modern Android car rental application built with Jetpack Compose following clean architecture principles.
 
 ## Features
 
-- 🚗 Modern UI with Jetpack Compose
-- 🎨 Beautiful and intuitive user interface
-- 📱 Responsive design for all screen sizes
-- 🎯 Smooth navigation between screens
-- 🖼️ High-quality car images and assets
-- 🎯 User-friendly onboarding experience
+- Browse available cars
+- View detailed car information
+- Book cars with or without a driver
+- Manage bookings (upcoming and completed)
+- User authentication and profile management
 
 ## Tech Stack
 
-- Kotlin
-- Jetpack Compose
-- Material Design 3
-- Android Studio
-- Gradle
-
-## Prerequisites
-
-- Android Studio Arctic Fox or newer
-- Android SDK 21 or higher
-- Kotlin 1.8.0 or higher
-- Gradle 7.0 or higher
-
-## Getting Started
-
-1. Clone the repository:
-```bash
-git clone https://github.com/Zinou-web/CarRentalPage1-20.git
-```
-
-2. Open the project in Android Studio
-
-3. Sync the project with Gradle files
-
-4. Run the app on your device or emulator
+- **UI**: Jetpack Compose
+- **Architecture**: Clean Architecture with MVVM
+- **Dependency Injection**: Hilt
+- **Local Storage**: Room
+- **Image Loading**: Coil
+- **Navigation**: Compose Navigation
+- **Concurrency**: Kotlin Coroutines & Flow
+- **Testing**: JUnit, Compose UI Testing
 
 ## Project Structure
 
 ```
-app/
-├── src/
-│   ├── main/
-│   │   ├── java/com/example/myapplication/
-│   │   │   ├── ui/
-│   │   │   │   ├── screens/
-│   │   │   │   │   ├── welcome/
-│   │   │   │   │   ├── second/
-│   │   │   │   │   └── third/
-│   │   │   │   └── theme/
-│   │   │   └── MainActivity.kt
-│   │   └── res/
-│   │       ├── drawable/
-│   │       ├── font/
-│   │       └── values/
-│   └── test/
-└── build.gradle.kts
+app/src/main/java/com/example/myapplication/
+├── data/
+│   ├── local/       # Local storage (Room DB)
+│   ├── remote/      # API calls
+│   └── repository/  # Repository implementations
+├── domain/
+│   ├── model/       # Domain entities
+│   ├── repository/  # Repository interfaces
+│   └── usecase/     # Business logic
+└── ui/
+    ├── common/      # Shared components
+    └── feature/     # Feature modules
+        ├── auth/    # Authentication
+        ├── car/     # Car listing and details
+        ├── booking/ # Booking management
+        └── profile/ # User profile
 ```
+
+## Getting Started
+
+1. Clone the repository
+2. Open the project in Android Studio
+3. Sync project with Gradle files
+4. Run the app on an emulator or physical device
+
+## Requirements
+
+- Android Studio Hedgehog or newer
+- Minimum SDK: 26 (Android 8.0)
+- Target SDK: 34 (Android 14)
+- JDK 17
 
 ## Contributing
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
 ## License

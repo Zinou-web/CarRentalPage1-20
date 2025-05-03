@@ -15,6 +15,8 @@ import com.example.myapplication.ui.screens.signin.SignInScreen
 import com.example.myapplication.ui.screens.welcome.WelcomeScreen
 import com.example.myapplication.ui.screens.second.SecondScreen
 import com.example.myapplication.ui.screens.ThirdScreen.ThirdScreen
+import com.example.myapplication.ui.screens.bookings.MyBookingsScreen
+import com.example.myapplication.ui.screens.bookings.CompletedBookingsScreen
 
 /**
  * Enum class that contains all the possible screens in our app
@@ -30,7 +32,10 @@ enum class Screen {
     CompleteProfile,  // The profile completion screen
     Home,         // The home screen with car listings
     CarDetails,   // The car details screen
-    Gallery       // The gallery screen showing car photos
+    Gallery,      // The gallery screen showing car photos
+    CarBooking,   // The car booking screen
+    MyBookings,   // The upcoming bookings screen
+    CompletedBookings // The completed bookings screen
 }
 
 /**
@@ -191,6 +196,10 @@ fun NavGraph(
                 // Navigate to welcome screen (sign out)
                 onSignOut = {
                     navController.navigateAndClear(Screen.Welcome.name)
+                },
+                // Navigate to My Bookings screen
+                onMyBookingsClick = {
+                    navController.navigate(Screen.MyBookings.name)
                 }
             )
         }
@@ -205,6 +214,10 @@ fun NavGraph(
                 // Navigate to Gallery screen
                 onGalleryClick = {
                     navController.navigate(Screen.Gallery.name)
+                },
+                // Navigate to CarBooking screen
+                onBookNow = {
+                    navController.navigate(Screen.CarBooking.name)
                 }
             )
         }
@@ -227,7 +240,72 @@ fun NavGraph(
                     com.example.myapplication.R.drawable.mustang,
                     com.example.myapplication.R.drawable.mustang2,
                     com.example.myapplication.R.drawable.mustang3
-                )
+                ),
+                // Navigate to CarBooking screen
+                onBookNow = {
+                    navController.navigate(Screen.CarBooking.name)
+                }
+            )
+        }
+
+        // Car Booking Screen
+        composable(Screen.CarBooking.name) {
+            com.example.myapplication.ui.screens.cardetails.CarBookingScreen(
+                onBackPressed = { navController.popBackStack() },
+                onContinue = { /* TODO: handle continue */ }
+            )
+        }
+        
+        // My Bookings Screen
+        composable(Screen.MyBookings.name) {
+            MyBookingsScreen(
+                onCompletedTabClick = {
+                    navController.navigate(Screen.CompletedBookings.name)
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onHomeClick = {
+                    navController.navigate(Screen.Home.name) {
+                        popUpTo(Screen.Home.name) {
+                            inclusive = false
+                        }
+                    }
+                },
+                onFavoriteClick = {
+                    // TODO: Navigate to Favorites screen
+                },
+                onProfileClick = {
+                    navController.navigate(Screen.SignIn.name)
+                }
+            )
+        }
+        
+        // Completed Bookings Screen
+        composable(Screen.CompletedBookings.name) {
+            CompletedBookingsScreen(
+                onUpcomingTabClick = {
+                    navController.popBackStack()
+                },
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                onHomeClick = {
+                    navController.navigate(Screen.Home.name) {
+                        popUpTo(Screen.Home.name) {
+                            inclusive = false
+                        }
+                    }
+                },
+                onFavoriteClick = {
+                    // TODO: Navigate to Favorites screen
+                },
+                onProfileClick = {
+                    navController.navigate(Screen.SignIn.name)
+                },
+                onRebookClick = {
+                    navController.navigate(Screen.CarDetails.name)
+                }
             )
         }
     }

@@ -39,7 +39,8 @@ import com.example.myapplication.ui.theme.inter
 @Composable
 fun CarDetailsScreen(
     onBackPressed: () -> Unit = {},
-    onGalleryClick: () -> Unit = {}
+    onGalleryClick: () -> Unit = {},
+    onBookNow: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     var isFavorite by remember { mutableStateOf(false) }
@@ -85,7 +86,7 @@ fun CarDetailsScreen(
             }
 
             // Price and Book Now Section - Moved outside the column for full width
-            PriceAndBookSection()
+            PriceAndBookSection(onBookNow = onBookNow)
         }
     }
 }
@@ -94,7 +95,9 @@ fun CarDetailsScreen(
 fun TopImageSection(
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    title: String = "Car Details",
+    showFavorite: Boolean = true
 ) {
     Box(
         modifier = Modifier
@@ -109,9 +112,9 @@ fun TopImageSection(
             modifier = Modifier.fillMaxSize()
         )
         
-        // Title "Car Details" at the top center
+        // Title at the top center
         Text(
-            text = "Car Details",
+            text = title,
             fontSize = 23.sp,
             fontFamily = poppins,
             fontWeight = FontWeight.Medium,
@@ -144,25 +147,27 @@ fun TopImageSection(
             }
         }
         
-        // Favorite button
-        Box(
-            modifier = Modifier
-                .padding(end = 15.dp, top = 20.dp)
-                .size(45.dp)
-                .clip(CircleShape)
-                .background(Color(0xFFF2F5FA))
-                .border(2.dp, Color.White, CircleShape)
-                .align(Alignment.TopEnd),
-        ) {
-            IconButton(
-                onClick = onFavoriteClick,
+        // Favorite button (optional)
+        if (showFavorite) {
+            Box(
+                modifier = Modifier
+                    .padding(end = 15.dp, top = 20.dp)
+                    .size(45.dp)
+                    .clip(CircleShape)
+                    .background(Color(0xFFF2F5FA))
+                    .border(2.dp, Color.White, CircleShape)
+                    .align(Alignment.TopEnd),
             ) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = if (isFavorite) Color.Red else Color.Black,
-                    modifier = Modifier.size(20.dp)
-                )
+                IconButton(
+                    onClick = onFavoriteClick,
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        tint = if (isFavorite) Color.Red else Color.Black,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
         }
 
@@ -452,7 +457,7 @@ fun DetailsSection() {
 }
 
 @Composable
-fun PriceAndBookSection() {
+fun PriceAndBookSection(onBookNow: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -495,7 +500,7 @@ fun PriceAndBookSection() {
             
             // Book Now Button
             Button(
-                onClick = { },
+                onClick = { onBookNow() },
                 modifier = Modifier
                     .height(40.dp)
                     .width(150.dp),

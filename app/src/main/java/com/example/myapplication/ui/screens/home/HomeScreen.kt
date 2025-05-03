@@ -37,7 +37,8 @@ import com.example.myapplication.ui.theme.inter
 fun HomeScreen(
     onCarClick: (String) -> Unit = {},
     onProfileClick: () -> Unit = {},
-    onSignOut: () -> Unit = {}
+    onSignOut: () -> Unit = {},
+    onMyBookingsClick: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
     var searchQuery by remember { mutableStateOf("") }
@@ -308,6 +309,9 @@ fun HomeScreen(
         // Bottom Navigation Bar
         BottomNavBar(
             modifier = Modifier.align(Alignment.BottomCenter),
+            onHomeClick = { /* Already on Home */ },
+            onMyBookingsClick = onMyBookingsClick,
+            onFavoriteClick = { /* TODO: Navigate to Favorites */ },
             onProfileClick = onProfileClick
         )
     }
@@ -478,7 +482,7 @@ fun MostPopularCarCard(
         // Outer white card containing everything
         Card(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(5.dp),
+            shape = RoundedCornerShape(16.dp),
             colors = CardDefaults.cardColors(containerColor = Color.White),
             elevation = CardDefaults.cardElevation(defaultElevation = 1.dp)
         ) {
@@ -693,7 +697,7 @@ fun CarFeatureTag(
 fun BottomNavBar(
     modifier: Modifier = Modifier,
     onHomeClick: () -> Unit = {},
-    onCatalogClick: () -> Unit = {},
+    onMyBookingsClick: () -> Unit = {},
     onFavoriteClick: () -> Unit = {},
     onProfileClick: () -> Unit = {}
 ) {
@@ -721,8 +725,8 @@ fun BottomNavBar(
             
             BottomNavItem(
                 iconRes = R.drawable.catalog,
-                label = "Catalog",
-                onClick = onCatalogClick
+                label = "Basket",
+                onClick = onMyBookingsClick
             )
             
             BottomNavItem(
